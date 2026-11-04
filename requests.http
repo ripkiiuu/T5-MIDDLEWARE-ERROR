@@ -1,0 +1,98 @@
+@baseUrl = http://localhost:3000
+@apiKey = rahasia123
+
+### GET daftar semua menu: 200
+GET {{baseUrl}}/menu
+
+### GET filter kategori: 200, hanya minuman
+GET {{baseUrl}}/menu?kategori=minuman
+
+### GET detail yang ada: 200
+GET {{baseUrl}}/menu/1
+
+### GET detail yang tidak ada: 404 NOT_FOUND
+GET {{baseUrl}}/menu/999
+
+### URL tidak dikenal: 404 ROUTE_NOT_FOUND
+GET {{baseUrl}}/tidak-ada
+
+### POST menu baru: 201, tersedia otomatis true
+POST {{baseUrl}}/menu
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "Soto Ayam", "harga": 15000, "kategori": "makanan" }
+
+### POST tanpa API key: 401 UNAUTHORIZED
+POST {{baseUrl}}/menu
+Content-Type: application/json
+
+{ "nama": "Kopi Susu", "harga": 12000, "kategori": "minuman" }
+
+### POST banyak field salah: 422 VALIDATION_ERROR (semua alasan sekaligus)
+POST {{baseUrl}}/menu
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "X", "harga": 10, "kategori": "lainnya" }
+
+### POST nama kembar (abaikan huruf besar/kecil): 409 NAMA_DUPLIKAT
+POST {{baseUrl}}/menu
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "nAsI gOrEnG kAmPuNg", "harga": 20000, "kategori": "makanan" }
+
+### DELETE data yang ada: 204 tanpa body (jalankan satu kali per restart server)
+DELETE {{baseUrl}}/menu/5
+x-api-key: {{apiKey}}
+
+### DELETE id tidak ada: 404 NOT_FOUND
+DELETE {{baseUrl}}/menu/999
+x-api-key: {{apiKey}}
+
+### DELETE tanpa API key: 401 UNAUTHORIZED
+DELETE {{baseUrl}}/menu/2
+
+### Bonus PUT: 200, ubah data yang ada
+PUT {{baseUrl}}/menu/3
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "Es Teh Lemon", "harga": 7000, "kategori": "minuman", "tersedia": true }
+
+### Bonus PUT id tidak ada: 404 NOT_FOUND
+PUT {{baseUrl}}/menu/999
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "Es Jeruk", "harga": 6000, "kategori": "minuman" }
+
+### Bonus PUT data tidak valid: 422 VALIDATION_ERROR
+PUT {{baseUrl}}/menu/2
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "X", "harga": 100, "kategori": "minuman" }
+
+### Bonus PUT nama sudah dipakai item lain: 409 NAMA_DUPLIKAT
+PUT {{baseUrl}}/menu/2
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "NASI GORENG KAMPUNG", "harga": 16000, "kategori": "makanan" }
+
+### JSON rusak: 400 REQUEST_ERROR, tetap dalam format error seragam
+POST {{baseUrl}}/menu
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ngawur
+
+### Uji sementara error 500: gunakan HANYA saat menu.push sengaja diubah menjadi menu.dorong
+### Setelah mengambil screenshot klien dan terminal, kembalikan menu.push sebelum commit.
+POST {{baseUrl}}/menu
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{ "nama": "Lontong Sayur", "harga": 14000, "kategori": "makanan" }
