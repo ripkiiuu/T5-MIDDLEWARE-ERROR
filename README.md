@@ -5,7 +5,7 @@ API kantin berbasis Express 5, menggunakan router, middleware, Joi, dan penangan
 ## Identitas
 
 - Nama: **Muhammad Rifqy Habibi**
-- NIM: **F12D02410080** (Varian **B — Kantin**, digit terakhir 0)
+- NIM: **F1D02410080** (Varian **B — Kantin**, digit terakhir 0)
 
 ## Cara Menjalankan
 
